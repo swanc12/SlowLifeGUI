@@ -21,7 +21,7 @@ public class RunContinuousButton extends JButton {
 
     class GameRunnable implements Runnable {
 	public void run() {
-	    _m.runContinuous();
+	    _m.runContinuous(false);
 	}
     }
     
