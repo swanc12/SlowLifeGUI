@@ -1,3 +1,12 @@
+/*
+ * Author: Colin Swan
+ * Description: Deliverable 5 Pinning tests, to ensure changes to SlowLifeGUI
+ * do not modify the functionality of the program.
+ *
+ * Due Date: 4/5/2016
+ *
+*/
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import org.junit.Test;
