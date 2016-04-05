@@ -31,10 +31,21 @@ public class MainPanel extends JPanel {
 	return _cells;
     }
     
+    /*
+     * Added this method for testing
+     * purposes, allows testing that
+     * backup cells are set correctly, which
+     * is useful when testing the runContinuous method.
+     */
     public Cell[][] getBackupCells(){
     	return _backupCells;
     }
 
+    /*
+     * DEPRECATED.
+     * This method is no longer used by any other method,
+     * as it is redundant. Only returns its input.
+     */
     private int convertToInt(int x) {
 	int c = 0;
 	String padding = "0";
@@ -46,8 +57,6 @@ public class MainPanel extends JPanel {
 	
 	String n = padding + String.valueOf(x);
 	int q = Integer.parseInt(n);
-	System.out.println("Origin " + x);
-	System.out.println(q);
 	return q;
     }
     
@@ -74,6 +83,7 @@ public class MainPanel extends JPanel {
 	if (_cells[x][upY].getAlive())        { numNeighbors++; }
 	if (_cells[x][downY].getAlive())      { numNeighbors++; }
 	    
+	//No longer call convertToInt, as the call was redundant. 
 	return numNeighbors;
 
     }
@@ -200,6 +210,13 @@ public class MainPanel extends JPanel {
 	
 	for (int j = 0; j < _size; j++) {
 	    for(int k = 0; k < _size; k++) {
+	    	/*
+	    	 * Removed the if else statement here as _cells[j][k].toString()
+	    	 * was called regardless. This should not have provided much
+	    	 * of a performance gain however. The performance gain here is
+	    	 * from removing redundancy in the cells toString method, which
+	    	 * caused a noticeable improvement to the "write" button.
+	    	 */
 	    	toWrite += _cells[j][k].toString();
 	    }
 		toWrite += "\n";
@@ -220,25 +237,34 @@ public class MainPanel extends JPanel {
      * Run the system continuously.
      */
 
+    /*
+     * Added the "testing" boolean for testing
+     * purposes. Using a thread for the test
+     * did not seem to consistently return
+     * success or failure, and as the method
+     * is only called in one location it seemed
+     * reasonable to add the boolean.
+     */
     public void runContinuous(boolean testing) {
     	
 	_running = true;
 	while (_running) {
 	    System.out.println("Running...");
-	    int origR = _r;
+
 	    try {
 		Thread.sleep(20);
 	    } catch (InterruptedException iex) { }
 	    
 	    /*
-	    for (int j=0; j < _maxCount; j++) {
-	    	_r += (j % _size) % _maxCount;
-		_r += _maxCount;
-	    }
-	    */
-	    _r = origR;
+	     * Removed the for loop, which did a bunch of work
+	     * with _r which was then overwritten by the original
+	     * value of _r before the for loop anyway, making
+	     * the loop a waste of system resources.
+	     */
+
 	    backup();
 	    calculateNextIteration();
+
 	    if(testing){
 	    	_running = false;
 	    }

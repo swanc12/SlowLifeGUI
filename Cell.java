@@ -35,6 +35,12 @@ public class Cell extends JButton {
 	return (text.equals("X"));
     }
 
+    /*
+     * Removed a lot of unnecessary code and loops here.
+     * All the method needs to do is return "X" if the
+     * cell is alive or "." if it is not. This caused noticeable
+     * improvement to the write function.
+     */
     public String toString() {
 	String currentState = getText();
 	if (currentState.equals("X")) {
